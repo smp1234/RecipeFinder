@@ -1,9 +1,16 @@
 package com.recipefinder.controller;
 
-import com.recipefinder.model.Recipe;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.recipefinder.model.Recipe;
+import com.recipefinder.service.RecipeService;
+@RestController
 public class RecipeController {
-	
+	@Autowired
+	RecipeService service;
 	
 	/**
 	 * @return
@@ -12,6 +19,10 @@ public class RecipeController {
 	 * Send recipe reponse to client
 	 * 
 	 */
+	@RequestMapping(value="test", method = RequestMethod.GET)
+	public String test() {
+		return service.ServiceTest();
+	}
 	public String getRecipe() {
 		
 		
