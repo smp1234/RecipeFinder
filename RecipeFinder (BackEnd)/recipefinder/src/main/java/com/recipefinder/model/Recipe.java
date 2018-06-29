@@ -32,6 +32,16 @@ public class Recipe {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
+	public Recipe() {
+		super();
+	}
+	public Recipe(String name, HashMap<String, Integer> ingredients, String steps, String origin) {
+		super();
+		this.name = name;
+		this.ingredients = ingredients;
+		this.steps = steps;
+		this.origin = origin;
+	}
 	
 
 }
