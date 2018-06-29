@@ -5,7 +5,11 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.recipefinder.dao.RecipeDao;
+
 public class RecipeService {
+	RecipeDao recipeDao = new RecipeDao();
 
 	public String getRecipe(File image) {
 		//recieve image
@@ -26,25 +30,32 @@ public class RecipeService {
 		
 		//call prediction model to get recipe name
 		Process p;
+		String result = null;
 		try {
-			String path = "C:\\Users\\spatel\\Desktop\\project.py";
-			String imagePath = "C:/Users/spatel/Desktop/chickenb1.jpg";
-			ProcessBuilder pb = new ProcessBuilder(Arrays.asList("python", "project.py","./images/chickenb1.jpg"));
+			String imagePath = "./images/"+fileName;
+			String pythonPath = "./ML/ml.py";
+			ProcessBuilder pb = new ProcessBuilder(Arrays.asList("python", pythonPath,imagePath));
 			p = pb.start();
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			System.out.println("Answer: " + in.readLine());
+			result = in.readLine();
 			p.destroy();
 		} catch (Exception e) {
 			System.out.println(e);
 		} 
-		return null;
+		return result;
 	}
 	
 	public String getDBRecipe(String recipeName) {
 		
 		//calls DAO layer using recipeName 
-		
-		return null;
+		String data = null;
+		try {
+			data = recipeDao.getRecipeByName(recipeName);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
 	}
 }
