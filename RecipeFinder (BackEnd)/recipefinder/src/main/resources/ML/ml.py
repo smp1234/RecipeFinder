@@ -78,7 +78,7 @@ def update_orientation(image):
 imageFile = sys.argv[1]					#path to image to be predicted
 image = Image.open(imageFile)
 
-
+print("Inside python")
 """Update orientation based on EXIF tags, if the file has orientation info. """
 image = update_orientation(image)
 

@@ -15,8 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.recipefinder.service.RecipeService;
 @RestController
 public class RecipeController {
+
 	@Autowired
-	RecipeService service;
 	RecipeService recipeService;
 	
 	/**
@@ -28,26 +28,25 @@ public class RecipeController {
 	 */
 
 	@PostMapping("/upload")
-	public ResponseEntity<String> getRecipe(@RequestParam("file") MultipartFile file) {
+	public String getRecipe(@RequestParam("file") MultipartFile file) {
 
 		
-		recipeService.getRecipe(file);
-		String message;
+		String response=recipeService.getRecipe(file);
+		
 		try {
-			
- 
-			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
-			return ResponseEntity.status(HttpStatus.OK).body(message);
+
+			return response;
 		} catch (Exception e) {
-			message = "FAIL to upload " + file.getOriginalFilename() + "!";
-			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+			response = "No recipe found!";
+			return response;
 		}
 		
 	}
 	
 	@GetMapping(value="/check")
 	public String checking() {
-		return "hello";
+		return recipeService.ServiceTest();
 	}
+	
 	
 }
