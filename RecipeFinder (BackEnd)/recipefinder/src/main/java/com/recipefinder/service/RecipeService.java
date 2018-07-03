@@ -19,7 +19,7 @@ public class RecipeService {
 	
 	public String getRecipe(MultipartFile multipartImage) {
 		// recieve image
-		File image = new File("./images/" + multipartImage.getOriginalFilename());
+		File image = new File("./images/"+multipartImage.getOriginalFilename());
 
 		boolean op = false;
 		try {
@@ -37,7 +37,13 @@ public class RecipeService {
 			return "Error in creating file...";
 		else {
 			String recipeName = predictRecipe(image.getPath());
-			String response = getDBRecipe(recipeName);
+			String response;
+			if(recipeName == null || recipeName.isEmpty() || recipeName.equals("Unable to detect item. Please try again...")) {
+				response = "Unable to detect item. Please try again!";
+				return response;
+			}
+			response = getDBRecipe(recipeName);
+			
 			return response;
 		}
 
