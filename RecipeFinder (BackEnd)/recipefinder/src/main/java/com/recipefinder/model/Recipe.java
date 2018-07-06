@@ -1,7 +1,7 @@
 package com.recipefinder.model;
 
-import java.util.HashMap;
-
+import java.util.HashSet;
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="Recipe")
@@ -9,10 +9,10 @@ public class Recipe {
 	@Id
 	private String Id;
 	private String name;
-	private HashMap<String, String> ingredients;
-	private String steps;
+	private HashSet<String> ingredients;
+	private List<String> steps;
 	private String origin;
-	
+	private String preparation;
 	public String getName() {
 		return name;
 	}
@@ -25,16 +25,16 @@ public class Recipe {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public HashMap<String, String> getIngredients() {
+	public HashSet<String> getIngredients() {
 		return ingredients;
 	}
-	public void setIngredients(HashMap<String, String> ingredients) {
+	public void setIngredients(HashSet<String> ingredients) {
 		this.ingredients = ingredients;
 	}
-	public String getSteps() {
+	public List<String> getSteps() {
 		return steps;
 	}
-	public void setSteps(String steps) {
+	public void setSteps(List<String> steps) {
 		this.steps = steps;
 	}
 	public String getOrigin() {
@@ -44,18 +44,20 @@ public class Recipe {
 		this.origin = origin;
 	}
 	public Recipe() {
-		
+		super();
 	}
-	public Recipe(String name, HashMap<String, String> ingredients, String steps, String origin) {
-		
+	public Recipe(String name, HashSet<String> ingredients, List<String> steps, String origin) {
+		super();
 		this.name = name;
 		this.ingredients = ingredients;
 		this.steps = steps;
 		this.origin = origin;
 	}
-	@Override
-	public String toString() {
-		return "in to string method";
+	public String getPreparation() {
+		return preparation;
+	}
+	public void setPreparation(String preparation) {
+		this.preparation = preparation;
 	}
 	
 
