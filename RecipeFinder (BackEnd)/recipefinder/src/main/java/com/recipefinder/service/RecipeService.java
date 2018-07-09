@@ -169,7 +169,7 @@ public class RecipeService {
 		String result = "";		
 		try {
 			String image = fileName;
-			String pythonPath = "ML/ml.py";			
+			String pythonPath = "ML/predict.py";			
 			
 			String[] command = new String[] {"C:\\Users\\spatel\\AppData\\Local\\Programs\\Python\\Python36\\python.exe", pythonPath, image};
 			try {
@@ -200,8 +200,7 @@ public class RecipeService {
 //		return data;
 //	}
 
-	public String searchWebRecipe(String recipeName) {
-		recipeName = "beef biryani";
+	public String searchWebRecipe(String recipeName) {		
 		String[] recipeWords = recipeName.split(" ");
 		String searchURL_2 = "https://www.allrecipes.com/search/results/?wt=";
 		String searchURL_1 = "https://www.foodfusion.com/recipe?s=";
