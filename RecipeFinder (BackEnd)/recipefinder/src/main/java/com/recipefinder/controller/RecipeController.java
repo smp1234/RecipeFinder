@@ -62,12 +62,16 @@ public class RecipeController {
 			return "Error in adding vote!";
 	}
 	
+	@GetMapping("/notifications")
+	public String sendNotification(int userId) {
+		return recipeService.sendNotification(userId);
+	}
+	
 	@GetMapping(value="/check")
 	public String checking() {
 		System.out.print("Inside Check...");
 		return recipeService.Test();
 	}
-
 	
 	
 }

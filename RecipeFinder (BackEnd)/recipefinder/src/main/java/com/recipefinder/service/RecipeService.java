@@ -62,29 +62,7 @@ public class RecipeService {
 	private PropertiesDao propertiesDao;
 	@Autowired
 	private Properties property;
-	
-//	private static int userId;
-//	private static int globalNotificationCount;
-	
-//	public RecipeService() {
-//		property = propertiesDao.getPropertyByName("userId");
-//		if(property == null) {
-//			propertiesDao.setPropertyValue("userId", 0);
-//			userId = 0; 
-//		}
-//		else	
-//			userId = property.getValue(); 
-//		property = propertiesDao.getPropertyByName("globalNotificationCount");
-//		if(property == null) {
-//			propertiesDao.setPropertyValue("globalNotificationCount", 0);
-//			globalNotificationCount = 0;
-//		}
-//		else
-//			globalNotificationCount = property.getValue();
-//		
-//	}
-	
-	
+		
 	public int getUserId(String emailId) {
 		user = userDao.getUserByEmailId(emailId);
 		if(user == null) {
@@ -143,7 +121,7 @@ public class RecipeService {
 			String response;
 			if(recipeName == null || recipeName.isEmpty() || recipeName.equals("Unable to detect item. Please try again...")) {
 				response = "Unable to detect item. Please try again!";
-				if(recipeName.equals("Unable to detect item. Please try again...")) {
+				if(recipeName == null || recipeName.equals("Unable to detect item. Please try again...")) {
 					boolean status = handleUndetectedImage(image,userId);
 					if(status == true)
 						return "Unable to detect item. We are asking other user to comment over it.";
@@ -153,7 +131,9 @@ public class RecipeService {
 								
 				return response;
 			}
-			response = searchWebRecipe(recipeName);
+			response = getDBRecipe(recipeName);
+			if(response == null)
+				response = searchWebRecipe(recipeName);
 			try {
 				Files.delete(Paths.get(image.getPath()));
 			} catch (IOException e) {				
@@ -177,8 +157,7 @@ public class RecipeService {
 				BufferedReader stream = new BufferedReader(new InputStreamReader(process.getInputStream()));
 				result = stream.readLine();
 				System.out.println(result);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (IOException e) {		
 				e.printStackTrace();
 			}
 		} catch (Exception e) {
@@ -187,18 +166,17 @@ public class RecipeService {
 		return result;
 	}
 
-//	public String getDBRecipe(String recipeName) {
-//
-//		// calls DAO layer using recipeName
-//		String data = null;
-//		try {
-//			data = recipeDao.getRecipeByName(recipeName);
-//		} catch (JsonProcessingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return data;
-//	}
+	public String getDBRecipe(String recipeName) {
+
+		// calls DAO layer using recipeName
+		String data = null;
+		try {
+			data = recipeDao.getRecipeByName(recipeName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
 
 	public String searchWebRecipe(String recipeName) {		
 		String[] recipeWords = recipeName.split(" ");
@@ -359,8 +337,7 @@ public class RecipeService {
 			int globalNotificationCount = property.getValue();
 			globalNotificationCount += 1;			
 			property.setValue(globalNotificationCount);
-			propertiesDao.updateProperties(property);
-			sendNotification(userId);
+			propertiesDao.updateProperties(property);			
 		} catch (Exception e) {
 			status = false;
 			e.printStackTrace();
