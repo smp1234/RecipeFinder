@@ -24,12 +24,12 @@ public class RecipeController {
 	 */
 
 	@GetMapping("/login")
-	public int login(String emailId) {
+	public int login(@RequestParam("emailId") String emailId) {
 		return recipeService.getUserId(emailId);
 	}
 	
 	@PostMapping("/signup")
-	public int signup(String emailId) {
+	public int signup(@RequestParam("emailId") String emailId) {
 		return recipeService.getUserId(emailId);
 	}
 
@@ -49,12 +49,12 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/getundetecteditems")
-	public String getUndetectedItems(int userId) {
+	public String getUndetectedItems(@RequestParam("userId") int userId) {
 		return recipeService.getUndetectedItemsForUser(userId).toString();
 	}
 	
 	@PostMapping("/vote")
-	public String addVote(String fileName, String vote, int userId) {
+	public String addVote(@RequestParam("filename") String fileName, @RequestParam("vote") String vote, @RequestParam("userId") int userId) {
 		boolean status = recipeService.handleVote(fileName, vote, userId);
 		if(status)
 			return "Vote added successfully";
@@ -63,7 +63,7 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/notifications")
-	public String sendNotification(int userId) {
+	public String sendNotification(@RequestParam("userId") int userId) {
 		return recipeService.sendNotification(userId);
 	}
 	
