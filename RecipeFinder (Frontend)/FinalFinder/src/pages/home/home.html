@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title> 
+    <ion-buttons end>
+      <button ion-button color="primary" (click)="logout()">Logout</button></ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="home">
+  <ion-title><h1>Welcome to RecipeFinder</h1></ion-title>
+  <ion-col width-100>
+    <ion-item>
+<label class="btn btn-default">
+<input type="file" (change)="selectFile($event)"> 
+</label>
+</ion-item>
+<ion-item>
+<button ion-button color="dark" outline
+(click)="upload()">Upload File</button>
+</ion-item>
+<ion-item>
+Name:
+<div>{{name}}</div>
+</ion-item>
+<ion-item>
+Ingredients: 
+<li *ngFor="let x of ingredients">{{x}}<br/></li>
+</ion-item>
+<ion-item>
+Steps:
+<li *ngFor="let x of steps">{{x}}<br/></li>
+</ion-item>
+</ion-col>
+</ion-content>
